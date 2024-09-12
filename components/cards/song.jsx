@@ -3,11 +3,11 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function SongCard({ title, image, artist, id, desc }) {
     return (
-        <div className="p-2 h-fit border border-border rounded-md bg-secondary/30 w-[200px]">
+        <div className="p-2 h-fit border border-border rounded-2xl bg-secondary/30 w-[200px]">
             <div className="overflow-hidden rounded-md">
                 {image ? (
                     <Link href={`/${id}`}>
-                        <img src={image} alt={title} className="h-[182px] w-full bg-secondary/60 rounded-md transition hover:scale-105 cursor-pointer" />
+                        <img src={image} alt={title} className="h-[182px] w-full bg-secondary/60 rounded-xl transition hover:scale-105 cursor-pointer" />
                     </Link>
                 ) : (
                     <Skeleton className="w-full h-[182px]" />

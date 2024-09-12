@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { getSongsById, getSongsLyricsById } from "@/lib/fetch";
-import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1 } from "lucide-react";
+import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Music4Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -146,7 +146,7 @@ export default function Player({ id }) {
                         <div className="flex flex-col justify-between w-full">
                             <div>
                                 <h1 className="text-xl font-bold md:max-w-lg max-w-[260px]">{data.name}</h1>
-                                <p className="text-xs text-muted-foreground">{data.artists.primary[0]?.name || "unknown"}</p>
+                                <p className="text-xs text-muted-foreground">by <b>{data.artists.primary[0]?.name || "unknown"}</b></p>
                             </div>
                             <div className="grid gap-2 w-full mt-5 sm:mt-0">
                                 <Slider onValueChange={handleSeek} value={[currentTime]} max={duration} className="w-full" />
@@ -156,17 +156,17 @@ export default function Player({ id }) {
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
                                     <div className="flex items-center gap-3 sm:mt-0">
-                                        <Button size="icon" variant="outline" onClick={loopSong}>
+                                        <Button size="icon" variant="outline" onClick={loopSong} className="rounded-full">
                                             {!isLooping ? <Repeat className="h-4 w-4" /> : <Repeat1 className="h-4 w-4" />}
                                         </Button>
-                                        <Button size="icon" variant={playing ? "gooeyRight" : "gooeyLeft"} onClick={togglePlayPause}>
+                                        <Button size="icon" variant={playing ? "gooeyRight" : "gooeyLeft"} onClick={togglePlayPause} className="rounded-full">
                                             {playing ? (
-                                                <Pause className="h-4 w-4" />
+                                                <Music4Icon className="animate-spin h- w-4" />
                                             ) : (
                                                 <Play className="h-4 w-4" />
                                             )}
                                         </Button>
-                                        <Button size="icon" variant="outline" onClick={downloadSong}>
+                                        <Button size="icon" variant="outline" onClick={downloadSong} className="rounded-full">
                                             {isDownloading ? (
                                                 <Loader2 className="h-4 w-4 animate-spin" />
                                             ) : (
@@ -174,7 +174,7 @@ export default function Player({ id }) {
                                             )}
                                         </Button>
                                     </div>
-                                    <Button size="icon" variant="outline" onClick={handleAddToBookmark}>{!isSaved ? <Bookmark className="h-4 w-4" /> : <BookmarkCheck className="h-4 w-4" />}</Button>
+                                    <Button size="icon" variant="outline" onClick={handleAddToBookmark} className="rounded-full">{!isSaved ? <Bookmark className="h-4 w-4"  /> : <BookmarkCheck className="h-4 w-4" />}</Button>
                                 </div>
                             </div>
                         </div>
