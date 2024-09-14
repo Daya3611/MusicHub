@@ -122,7 +122,7 @@ export default function Player({ id }) {
                         ) : (
                             <div className="relative">
                                 <img src={data.image[2].url} className="sm:h-[150px] h-full bg-secondary/50 rounded-3xl sm:w-[200px] w-full object-cover" />
-                                <img src={data.image[2].url} className=" block absolute top-0 left-0 w-[150%] h-[115%] blur-3xl -z-10 opacity-80 animate-slow-spin" />
+                                <img src={data.image[2].url} className=" block absolute top-0 left-0 w-[90%] h-[90%] blur-3xl -z-10 opacity-100 animate-slow-spin" />
                             </div>
                         )}
                     </div>
