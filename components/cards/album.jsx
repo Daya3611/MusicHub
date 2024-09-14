@@ -1,30 +1,23 @@
-"use client";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
-import { useContext, useEffect } from "react";
-import { MusicContext } from "@/hooks/use-context";
 
-export default function SongCard({ title, image, artist, id, desc, type = "music" }) {
-    const ids = useContext(MusicContext);
-    const setLastPlayed = () => {
-        localStorage.setItem("last-played", id);
-    };
+export default function AlbumCard({ title, image, artist, id, desc }) {
     return (
-        <div className="p-2 h-fit border border-border rounded-2xl bg-secondary/30 w-[200px]">
-            <div className="overflow-hidden rounded-2xl">
+        <div className="p-2 h-fit border border-border rounded-md bg-secondary/30 w-[200px]">
+            <div className="overflow-hidden rounded-md">
                 {image ? (
-                    <div onClick={() => { ids.setMusic(id); setLastPlayed(); }} className="rounded-full">
-                        <img src={image} alt={title} className="h-[182px] w-full bg-secondary/60 rounded-2xl transition hover:scale-105 cursor-pointer" />
-                    </div>
+                    <Link href={`/${id}`}>
+                        <img src={image} alt={title} className="h-[182px] w-full bg-secondary/60 rounded-md transition hover:scale-105 cursor-pointer" />
+                    </Link>
                 ) : (
                     <Skeleton className="w-full h-[182px]" />
                 )}
             </div>
             <div className="cursor-pointer">
                 {title ? (
-                    <div onClick={() => { ids.setMusic(id); setLastPlayed(); }} className="mt-2 flex items-center justify-between">
+                    <Link href={`/${id}`} className="mt-2 flex items-center justify-between">
                         <h1 className="text-sm font-medium hover:opacity-70">{title.slice(0, 20)}{title.length > 20 && '...'}</h1>
-                    </div>
+                    </Link>
                 ) : (
                     <Skeleton className="w-[70%] h-4 mt-2" />
                 )}

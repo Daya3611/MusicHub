@@ -1,4 +1,5 @@
 "use client"
+import AlbumCard from "@/components/cards/album";
 import ArtistCard from "@/components/cards/artist";
 import SongCard from "@/components/cards/song";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -29,7 +30,7 @@ export default function Page() {
 
   useEffect(() => {
     getSongs("latest", "latest");
-    getSongs("love", "popular");
+    getSongs("trending", "popular");
     getAlbum();
   }, []);
 
@@ -67,7 +68,7 @@ export default function Page() {
         <ScrollArea className="rounded-md mt-4">
           <div className="flex gap-3">
             {albums.length ? albums.map((song) => (
-              <SongCard key={song.id} image={song.image[2].url} album={song.album} title={song.name} artist={song.artists.primary[0].name} id={`album/${song.id}`} />
+              <AlbumCard key={song.id} image={song.image[2].url} album={song.album} title={song.name} artist={song.artists.primary[0].name} id={`album/${song.id}`} />
             )) : (
               <>
                 <SongCard />
@@ -144,7 +145,7 @@ export default function Page() {
       </div>
 
       <div className="mt-8">
-        <h1 className="text-base font-medium">Popular Songs</h1>
+        <h1 className="text-base font-medium">Trending Songs</h1>
         <p className="text-xs text-muted-foreground">Most played songs in this week.</p>
         <ScrollArea className="rounded-md mt-4">
           <div className="flex gap-3">

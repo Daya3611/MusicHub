@@ -4,9 +4,9 @@ import { getSongsById, getSongsLyricsById } from "@/lib/fetch";
 import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Music4Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 export default function Player({ id }) {
     const [data, setData] = useState([]);
@@ -18,6 +18,7 @@ export default function Player({ id }) {
     const [isLooping, setIsLooping] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [audioURL, setAudioURL] = useState("");
+    const params = useSearchParams();
 
     const getSong = async () => {
         const get = await getSongsById(id);
@@ -95,6 +96,9 @@ export default function Player({ id }) {
         if (exisn != null && exisn.split(" ").find(e => e == id)) {
             setIsSaved(true);
         }
+        if (params.get("c")) {
+            audioRef.current.currentTime = parseFloat(params.get("c"));
+        }
         const handleTimeUpdate = () => {
             try {
                 setCurrentTime(audioRef.current.currentTime);
@@ -146,7 +150,7 @@ export default function Player({ id }) {
                         <div className="flex flex-col justify-between w-full">
                             <div>
                                 <h1 className="text-xl font-bold md:max-w-lg max-w-[260px]">{data.name}</h1>
-                                <p className="text-xs text-muted-foreground">by <b>{data.artists.primary[0]?.name || "unknown"}</b></p>
+                                <p className="text-xs text-muted-foreground">By <span className="font-bold">{data.artists.primary[0]?.name || "unknown"}</span></p>
                             </div>
                             <div className="grid gap-2 w-full mt-5 sm:mt-0">
                                 <Slider onValueChange={handleSeek} value={[currentTime]} max={duration} className="w-full" />
@@ -161,7 +165,7 @@ export default function Player({ id }) {
                                         </Button>
                                         <Button size="icon" variant={playing ? "gooeyRight" : "gooeyLeft"} onClick={togglePlayPause} className="rounded-full">
                                             {playing ? (
-                                                <Music4Icon className="animate-spin h- w-4" />
+                                                <Music4Icon className="h-4 w-4 animate-spin" />
                                             ) : (
                                                 <Play className="h-4 w-4" />
                                             )}
@@ -174,7 +178,7 @@ export default function Player({ id }) {
                                             )}
                                         </Button>
                                     </div>
-                                    <Button size="icon" variant="outline" onClick={handleAddToBookmark} className="rounded-full">{!isSaved ? <Bookmark className="h-4 w-4"  /> : <BookmarkCheck className="h-4 w-4" />}</Button>
+                                    <Button size="icon" variant="outline" onClick={handleAddToBookmark} className="rounded-full">{!isSaved ? <Bookmark className="h-4 w-4" /> : <BookmarkCheck className="h-4 w-4" />}</Button>
                                 </div>
                             </div>
                         </div>

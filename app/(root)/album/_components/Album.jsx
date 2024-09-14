@@ -1,5 +1,6 @@
 "use client"
 
+import AlbumCard from "@/components/cards/album";
 import SongCard from "@/components/cards/song";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
