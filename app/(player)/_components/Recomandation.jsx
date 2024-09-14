@@ -28,12 +28,12 @@ export default function Recomandation({ id }) {
                 <h1 className="text-base font-medium">Recomandation</h1>
                 <p className="text-xs text-muted-foreground">Related to your search</p>
             </div>
-            <ScrollArea className="rounded-md mt-4">
+            <ScrollArea className="rounded-2xl mt-4">
                 {!loading && data && (
                     <div>
                         <div className="flex gap-3">
                             {data.map((song) => (
-                                <AlbumCard key={song.id} image={song.image[2].url} album={song.album.name} title={song.name} artist={song.artists.primary[0]?.name || "unknown"} id={song.id} />
+                                <AlbumCard key={song.id} image={song.image[2].url} album={song.album.name} title={song.name} artist={song.artists.primary[0]?.name || "unknown"} id={song.id} imaclassName="rounded-full" />
                             ))}
                         </div>
                     </div>
