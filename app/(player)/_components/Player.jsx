@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { getSongsById, getSongsLyricsById } from "@/lib/fetch";
-import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Music4Icon } from "lucide-react";
+import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Share2, Music4Icon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
@@ -16,7 +16,6 @@ export default function Player({ id }) {
     const [duration, setDuration] = useState(0);
     const [isDownloading, setIsDownloading] = useState(false);
     const [isLooping, setIsLooping] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
     const [audioURL, setAudioURL] = useState("");
     const params = useSearchParams();
 
@@ -42,8 +41,10 @@ export default function Player({ id }) {
     const togglePlayPause = () => {
         if (playing) {
             audioRef.current.pause();
+            localStorage.setItem("p", "false");
         } else {
             audioRef.current.play();
+            localStorage.setItem("p", "true");
         }
         setPlaying(!playing);
     };
@@ -78,31 +79,26 @@ export default function Player({ id }) {
         }
     };
 
-    const handleAddToBookmark = () => {
-        let exisn = localStorage.getItem("saved");
-        if (exisn != null && exisn.split(" ").find(e => e == id)) {
-            localStorage.setItem("saved", exisn.split(" ").filter(e => e != id).join(" "));
-            setIsSaved(false);
-            return toast.success('Removed from Bookmarks!');
+    const handleShare = () => {
+        try {
+            navigator.share({ url: `${window.location.toString()}` });
         }
-        setIsSaved(true);
-        localStorage.setItem("saved", `${exisn != null ? exisn : ""} ${id}`);
-        toast.success('Saved to Bookmarks!');
-    };
+        catch (e) {
+            toast.error('Something went wrong!');
+        }
+    }
 
     useEffect(() => {
         getSong();
-        let exisn = localStorage.getItem("saved");
-        if (exisn != null && exisn.split(" ").find(e => e == id)) {
-            setIsSaved(true);
-        }
+        localStorage.setItem("last-played", id);
         if (params.get("c")) {
-            audioRef.current.currentTime = parseFloat(params.get("c"));
+            audioRef.current.currentTime = parseFloat(params.get("c") + 1);
         }
         const handleTimeUpdate = () => {
             try {
                 setCurrentTime(audioRef.current.currentTime);
                 setDuration(audioRef.current.duration);
+                localStorage.setItem("c", audioRef.current.currentTime);
             }
             catch (e) {
                 setPlaying(false);
@@ -122,9 +118,12 @@ export default function Player({ id }) {
                 <div className="sm:flex px-6 md:px-20 lg:px-32 grid gap-5 w-full">
                     <div>
                         {data.length <= 0 ? (
-                            <Skeleton className="md:w-[130px] rounded-2xl md:h-[150px] w-full h-[370px]" />
+                            <Skeleton className="md:w-[130px] aspect-square rounded-2xl md:h-[150px]" />
                         ) : (
-                            <img src={data.image[2].url} className="sm:h-[150px] h-full bg-secondary/50 rounded-2xl sm:w-[200px] w-full object-cover" />
+                            <div className="relative">
+                                <img src={data.image[2].url} className="sm:h-[150px] h-full bg-secondary/50 rounded-3xl sm:w-[200px] w-full object-cover" />
+                                <img src={data.image[2].url} className="hidden dark:block absolute top-0 left-0 w-[150%] h-[115%] blur-3xl -z-10 opacity-40" />
+                            </div>
                         )}
                     </div>
                     {data.length <= 0 ? (
@@ -150,7 +149,7 @@ export default function Player({ id }) {
                         <div className="flex flex-col justify-between w-full">
                             <div>
                                 <h1 className="text-xl font-bold md:max-w-lg max-w-[260px]">{data.name}</h1>
-                                <p className="text-xs text-muted-foreground">By <span className="font-bold">{data.artists.primary[0]?.name || "unknown"}</span></p>
+                                <p className="text-xs text-muted-foreground">By <span  className="font-bold">{data.artists.primary[0]?.name || "unknown"}</span></p>
                             </div>
                             <div className="grid gap-2 w-full mt-5 sm:mt-0">
                                 <Slider onValueChange={handleSeek} value={[currentTime]} max={duration} className="w-full" />
@@ -178,7 +177,7 @@ export default function Player({ id }) {
                                             )}
                                         </Button>
                                     </div>
-                                    <Button size="icon" variant="outline" onClick={handleAddToBookmark} className="rounded-full">{!isSaved ? <Bookmark className="h-4 w-4" /> : <BookmarkCheck className="h-4 w-4" />}</Button>
+                                    <Button size="icon" variant="outline" onClick={handleShare} className="rounded-full"><Share2 className="h-4 w-4"  /></Button>
                                 </div>
                             </div>
                         </div>

@@ -99,7 +99,7 @@ export default function Player() {
                     ref={audioRef}
                 ></audio>
                 {values.music && (
-                    <div className="shadow-2xl dark:shadow-sm  fixed flex items-center jus bottom-3 w-[90%] border-t left-[5%] z-50 bg-background/90  p-3 md:px-20 lg:px-32 gap-4 rounded-3xl">
+                    <div className="shadow-2xl dark:shadow-sm  fixed flex items-center jus bottom-3 w-[90%] border left-[5%] z-50 bg-background/90  p-3 md:px-20 lg:px-32 gap-4 rounded-3xl">
                         <div className="relative">
                             <Button
                                 size="icon"
