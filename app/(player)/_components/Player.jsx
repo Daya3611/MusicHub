@@ -122,7 +122,7 @@ export default function Player({ id }) {
                         ) : (
                             <div className="relative">
                                 <img src={data.image[2].url} className="sm:h-[150px] h-full bg-secondary/50 rounded-3xl sm:w-[200px] w-full object-cover" />
-                                <img src={data.image[2].url} className=" block absolute top-0 left-0 w-[150%] h-[115%] blur-3xl -z-10 opacity-80" />
+                                <img src={data.image[2].url} className=" block absolute top-0 left-0 w-[150%] h-[115%] blur-3xl -z-10 opacity-80 animate-slow-spin" />
                             </div>
                         )}
                     </div>
@@ -149,7 +149,7 @@ export default function Player({ id }) {
                         <div className="flex flex-col justify-between w-full">
                             <div>
                                 <h1 className="text-xl font-bold md:max-w-lg max-w-[260px]">{data.name}</h1>
-                                <p className="text-xs text-muted-foreground">By <span  className="font-bold">{data.artists.primary[0]?.name || "unknown"}</span></p>
+                                <p className="text-xs text-muted-foreground">By <span className="font-bold">{data.artists.primary[0]?.name || "unknown"}</span></p>
                             </div>
                             <div className="grid gap-2 w-full mt-5 sm:mt-0">
                                 <Slider onValueChange={handleSeek} value={[currentTime]} max={duration} className="w-full" />
@@ -177,7 +177,7 @@ export default function Player({ id }) {
                                             )}
                                         </Button>
                                     </div>
-                                    <Button size="icon" variant="outline" onClick={handleShare} className="rounded-full"><Share2 className="h-4 w-4"  /></Button>
+                                    <Button size="icon" variant="outline" onClick={handleShare} className="rounded-full"><Share2 className="h-4 w-4" /></Button>
                                 </div>
                             </div>
                         </div>
