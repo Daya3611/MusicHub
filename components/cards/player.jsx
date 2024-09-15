@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
-import { ExternalLink, Music4, Pause, Play, Repeat, Repeat1, X } from "lucide-react"; // Added X icon for close button
+import { CrossIcon, ExternalLink, Music4, Pause, Play, Repeat, Repeat1, ShieldCloseIcon, X } from "lucide-react"; // Added X icon for close button
 import { Slider } from "../ui/slider";
 import { getSongsById } from "@/lib/fetch";
 import Link from "next/link";
@@ -85,7 +85,7 @@ export default function Player() {
         }
     }, [values.music]);
 
-    if (!visible) return null; // Don't render the player if it's not visible
+    if (!visible) return null;
 
     return (
         <main className="items-center w-[90%] justify-center">

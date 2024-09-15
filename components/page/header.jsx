@@ -1,10 +1,10 @@
-import { Bookmark, Star } from "lucide-react";
+import { Bookmark, Download, Star } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "../ModeToggle";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import Search from "./search";
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 
 export default function Header() {
     return (
@@ -17,6 +17,9 @@ export default function Header() {
                 {/* <Link href="/saved" className={cn(buttonVariants({ variant: "default" }), "gap-2")}>
                     Saved <Bookmark className="w-4 h-4" />
                 </Link> */}
+                <Button className="w-9 h-9 rounded-full" alt="Downlode app "  >
+                    <a href="./MusicHub.apk" ><Download className="w-5 h-5" /></a>
+                </Button>
                 <ModeToggle />
             </div>
         </header>
