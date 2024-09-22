@@ -19,9 +19,9 @@ export default function Search() {
     };
     return (
         <>
-        <Link href={"/search/" + query} ref={linkRef}></Link>
+            <Link href={"/search/" + query} ref={linkRef}></Link>
             <form onSubmit={handleSubmit}>
-                <Input ref={inpRef} value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" className="w-full md:w-[300px]" type="search" name="query" placeholder="Search for song, artist.." />
+                <Input ref={inpRef} value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" className="w-full md:w-[300px] rounded-2xl" type="search" name="query" placeholder="Search for song, artist.." />
             </form>
         </>
     )

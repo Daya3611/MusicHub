@@ -2,11 +2,14 @@
 import { Button } from "@/components/ui/button";
 import { getSongsById, getSongsLyricsById } from "@/lib/fetch";
 import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Share2, Music4Icon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { NextContext } from "@/hooks/use-context";
+import Next from "@/components/cards/next";
 
 export default function Player({ id }) {
     const [data, setData] = useState([]);
@@ -18,6 +21,7 @@ export default function Player({ id }) {
     const [isLooping, setIsLooping] = useState(false);
     const [audioURL, setAudioURL] = useState("");
     const params = useSearchParams();
+    const next = useContext(NextContext);
 
     const getSong = async () => {
         const get = await getSongsById(id);
@@ -88,9 +92,11 @@ export default function Player({ id }) {
         }
     }
 
+
     useEffect(() => {
         getSong();
         localStorage.setItem("last-played", id);
+        localStorage.removeItem("p");
         if (params.get("c")) {
             audioRef.current.currentTime = parseFloat(params.get("c") + 1);
         }
@@ -111,6 +117,15 @@ export default function Player({ id }) {
             }
         };
     }, []);
+    useEffect(() => {
+        const handleRedirect = () => {
+            if (currentTime === duration && !isLooping && duration !== 0) {
+                window.location.href = `https://${window.location.host}/${next?.nextData?.id}`;
+            }
+        };
+        if (isLooping || duration === 0) return;
+        return handleRedirect();
+    }, [currentTime, duration, isLooping, next?.nextData?.id]);
     return (
         <div className="mb-3 mt-5">
             <audio onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onLoadedData={() => setDuration(audioRef.current.duration)} autoPlay={playing} src={audioURL} ref={audioRef}></audio>
@@ -180,10 +195,16 @@ export default function Player({ id }) {
                                     <Button size="icon" variant="outline" onClick={handleShare} className="rounded-full"><Share2 className="h-4 w-4" /></Button>
                                 </div>
                             </div>
+                            <div>
+                                {/* {next?.nextData && (
+                                    <Next name={next.nextData.name} artist={next.nextData.artist} image={next.nextData.image} />
+                                )} */}
+                            </div>
                         </div>
                     )}
                 </div>
             </div>
+
         </div>
     )
 }

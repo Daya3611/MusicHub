@@ -67,7 +67,7 @@
     @apply bg-background text-foreground select-none;
   }
   ::-webkit-scrollbar{
-    @apply w-0 h-0;
+    @apply w-0 h-0 bg-transparent;
   }
   ::-webkit-scrollbar-track{
     @apply bg-transparent;

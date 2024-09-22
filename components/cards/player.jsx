@@ -99,44 +99,57 @@ export default function Player() {
                     ref={audioRef}
                 ></audio>
                 {values.music && (
-                    <div className="shadow-2xl dark:shadow-sm  fixed flex items-center jus bottom-3 w-[90%] border left-[5%] z-50 bg-background/80  p-3 md:px-20 lg:px-32 gap-4 rounded-3xl">
+                    <div className="shadow-2xl dark:shadow-sm  fixed flex items-center jus bottom-3 w-[90%] border left-[5%] z-50 bg-background/80  p-3 md:px-10 lg:px-10 gap-4 rounded-3xl">
                         <div className="relative">
-                            <Button
+                            {/* <Button
                                 size="icon"
                                 variant="secondary"
                                 className="h-full w-full bg-secondary/40 hover:bg-secondary/50 backdrop-blur-sm absolute z-10"
                                 onClick={togglePlayPause}
                             >
                                 {playing ? <Music4 className="h-6 w-6 animate-spin" /> : <Play className="h-6 w-6" />}
-                            </Button>
-                            <img
-                                src={data.image ? data?.image[1]?.url : ""}
-                                alt={data?.name}
-                                className="rounded-xl h-20 min-w-20 hover:opacity-85 transition"
-                            />
-                            
+                            </Button> */}
+                            <Link href={`/${values.music}?c=${currentTime}`}>
+                                <img
+                                    src={data.image ? data?.image[1]?.url : ""}
+                                    alt={data?.name}
+                                    className="rounded-xl h-20 min-w-20 hover:opacity-85 transition"
+                                />
+                            </Link>
+
                         </div>
                         <div className="w-full">
                             <div className="flex items-center justify-between mb-2 w-full">
                                 <div>
                                     <Link href={`/${values.music}?c=${currentTime}`} className="text-base font-medium flex gap-2 items-center">
-                                        {data?.name?.slice(0, 18)}
-                                        {data?.name?.length >= 18 ? ".." : ""}
-                                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                                        {data?.name?.slice(0, 12)}
+                                        {data?.name?.length >= 12 ? ".." : ""}
+                                        {/* <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" /> */}
                                     </Link>
                                     <h2 className="text-xs -mt-0.5 text-muted-foreground">
-                                        By <span className="font-bold">{data?.artists?.primary[0]?.name.slice(0, 20)}</span>
-                                        {data?.artists?.primary[0]?.name.length >= 20 ? ".." : ""}
+                                        By <span className="font-bold">{data?.artists?.primary[0]?.name.slice(0, 15)}</span>
+                                        {data?.artists?.primary[0]?.name.length >= 15 ? ".." : ""}
                                     </h2>
                                 </div>
-                                <Button  size="icon"
-                                    variant="outline"
-                                    onClick={() => setVisible(false)}
-                                    className="rounded-full">
-                                    
-                                    <X className="h-4 w-4" />
 
-                                </Button>
+                                <div className="flex gap-2 items-center">
+                                    <Button size="icon"
+                                        variant="outline"
+                                        onClick={togglePlayPause}
+                                        className="rounded-full">
+
+                                        {playing ? <Pause className="h-6 w-6 " /> : <Play className="h-6 w-6" />}
+
+                                    </Button>
+                                    <Button size="icon"
+                                        variant="outline"
+                                        onClick={() => setVisible(false)}
+                                        className="rounded-full">
+
+                                        <X className="h-4 w-4" />
+
+                                    </Button>
+                                </div>
                             </div>
                             <div className="w-full grid gap-1">
                                 <Slider onValueChange={handleSeek} value={[currentTime]} max={duration} className="w-full" />
