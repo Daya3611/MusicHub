@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from "sonner";
+import MobileMenu from "@/components/mobile-menu";
 
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -22,8 +23,8 @@ export default function RootLayout({ children }) {
       <body className={bricolage_grotesque.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          // enableSystem
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <NextTopLoader
@@ -42,7 +43,8 @@ export default function RootLayout({ children }) {
             showAtBottom={false}
           />
           {children}
-          <Toaster position="top-center"/>
+          {/* <MobileMenu/> */}
+          <Toaster position="top-center" visibleToasts={1}/>
         </ThemeProvider>
       </body>
     </html>

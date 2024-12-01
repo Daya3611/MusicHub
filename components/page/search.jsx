@@ -2,6 +2,8 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { SearchIcon } from "lucide-react";
 
 export default function Search() {
     const [query, setQuery] = useState("");
@@ -19,9 +21,10 @@ export default function Search() {
     };
     return (
         <>
-            <Link href={"/search/" + query} ref={linkRef}></Link>
-            <form onSubmit={handleSubmit}>
-                <Input ref={inpRef} value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" className="w-full md:w-[300px] rounded-2xl" type="search" name="query" placeholder="Search for song, artist.." />
+        <Link href={"/search/" + query} ref={linkRef}></Link>
+            <form onSubmit={handleSubmit} className="flex items-center relative z-10">
+                <Button variant="ghost" type="submit" size="icon" className="absolute right-0 rounded-xl rounded-l-none bg-none"><SearchIcon className="w-4 h-4"/></Button>
+                <Input ref={inpRef} value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" type="search" className="rounded-lg bg-secondary/50" name="query" placeholder="Try Maharani.." />
             </form>
         </>
     )

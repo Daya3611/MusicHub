@@ -5,15 +5,36 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function ModeToggle() {
-  const { setTheme, resolvedTheme: theme, systemTheme } = useTheme();
-  console.log(systemTheme);
+  const { setTheme } = useTheme()
 
   return (
-    <div className="flex rounded-3xl overflow-hidden border border-border">
-      <Button onClick={() => setTheme("light")} size="icon" className="rounded-3xl dark:bg-transparent hover:bg-primary dark:text-foreground bg-primary hover:text-primary-foreground text-primary-foreground transition-all duration-30000 ease-in-out transform" variant={"ghost"}><Sun className="h-4 w-4" /></Button>
-      <Button onClick={() => setTheme("dark")} size="icon" className="rounded-3xl dark:bg-primary dark:text-primary-foreground transition-all duration-3000 ease-in-out transform" variant={"ghost"}><Moon className="h-4 w-4" /></Button>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="rounded-full h-[42px] w-[42px]" size="icon">
+          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

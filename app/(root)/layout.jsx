@@ -1,3 +1,4 @@
+import Player from "@/components/cards/player";
 import MusicProvider from "@/components/music-provider";
 import Footer from "@/components/page/footer";
 import Header from "@/components/page/header";
@@ -7,11 +8,9 @@ export default function RootLayout({ children }) {
     return (
         <main>
             <Header />
-            <div className="md:hidden block px-6 mb-2">
-                <Search />
-            </div>
             <MusicProvider>
                 {children}
+                <Player />
             </MusicProvider>
             <Footer />
         </main>
