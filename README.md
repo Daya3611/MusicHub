@@ -37,7 +37,7 @@ Mobile Player
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Daya3611/musichub.git
+git clone [https://github.com/Daya3611/musichub.git](https://github.com/Daya3611/MusicHub)
 cd musichub
 ```
 
